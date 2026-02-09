@@ -13,7 +13,32 @@
 
 **Nunchaku** is a high-performance inference engine optimized for 4-bit neural networks, as introduced in our paper [SVDQuant](http://arxiv.org/abs/2411.05007). For the underlying quantization library, check out [DeepCompressor](https://github.com/nunchaku-tech/deepcompressor).
 
-Join our user groups on [**Discord**](https://discord.gg/Wk6PnwX9Sm) and [**WeChat**](https://huggingface.co/datasets/nunchaku-tech/cdn/resolve/main/nunchaku/assets/wechat.jpg) to engage in discussions with the community! More details can be found [here](https://github.com/nunchaku-tech/nunchaku/issues/149). If you have any questions, run into issues, or are interested in contributing, don’t hesitate to reach out!
+Join our user groups on [**Discord**](https://discord.gg/Wk6PnwX9Sm) and [**WeChat**](https://huggingface.co/datasets/nunchaku-tech/cdn/resolve/main/nunchaku/assets/wechat.jpg) to engage in discussions with the community! More details can be found [here](https://github.com/nunchaku-tech/nunchaku/issues/149). If you have any questions, run into issues, or are interested in contributing, don't hesitate to reach out!
+
+## Wan2.2 I2V 量化推理（本分支新增）
+
+本分支（`add-wan2-only`）新增了对 **Wan2.2 Image-to-Video (I2V)** 模型的 SVD W4A4 量化推理支持。量化权重基于 [DeepCompressor (wan2-i2v-quantization)](https://github.com/lantudou/deepcompressor/tree/wan2-i2v-quantization) 生成。
+
+**新增内容：**
+
+- `nunchaku/models/transformers/transformer_wan.py` — Wan2.2 Transformer 的量化推理实现（`NunchakuWanTransformer3DModel`）
+- `nunchaku/models/attention_processors/wan.py` — Wan2.2 对应的 Attention Processor
+- `wan2.2/config.json` — 模型配置文件
+- `tests/test_wan_i2v_inference.py` — 推理测试脚本
+
+**使用方式：**
+
+```python
+from nunchaku.models.transformers import NunchakuWanTransformer3DModel
+
+quantized_transformer = NunchakuWanTransformer3DModel.from_pretrained(
+    "path/to/wan2.2_merged.safetensors",
+    device="cuda",
+    torch_dtype=torch.bfloat16,
+)
+```
+
+详细用法请参考 `tests/test_wan_i2v_inference.py`。
 
 ## News
 
